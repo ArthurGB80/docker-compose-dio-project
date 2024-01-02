@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  angular-app:
+    build: ./angular-app
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./angular-app:/usr/local/fudgelate-webpage/angular-app
+
+  java-app:
+    build: ./java-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    volumes:
+      - ./java-app:/usr/local/fudgelate-webpage/java-app
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db-data:/usr/local/fudgelate-webpage/db-data
